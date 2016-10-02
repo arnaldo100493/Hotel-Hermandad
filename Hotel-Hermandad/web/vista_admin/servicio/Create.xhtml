@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ServicioCreateDlg" widgetVar="ServicioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="CREAR SERVICIO" closeOnEscape="true">
+
+            <h:form id="ServicioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{servicioController.servicio != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="NOMBRE" for="nombre" />
+                        <p:inputText id="nombre" value="#{servicioController.servicio.nombre}" required="true" requiredMessage="NOMBRE REQUERIDO"/>
+
+                        <p:outputLabel value="DESCRIPCIÓN" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{servicioController.servicio.descripcion}" />
+
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{servicioController.crear()}" value="GUARDAR" update="display,:ServicioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ServicioCreateDialog'));">
+                        <p:confirm header="CONFIRMAR" message="CONFIRMAR CREAR" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="CANCELAR" onclick="PF('ServicioCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

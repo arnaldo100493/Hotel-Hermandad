@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TipoHabitacionEditDlg" widgetVar="TipoHabitacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="EDITAR" closeOnEscape="true">
+
+            <h:form id="TipoHabitacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{tipoHabitacionController.tipoHabitacion != null}">
+
+
+                        <h:outputLabel value="ID" for="id" />
+                        <h:outputText id="id" value="#{tipoHabitacionController.tipoHabitacion.id}" />
+
+                        <p:outputLabel value="NOMBRE" for="nombre" />
+                        <p:inputText id="nombre" value="#{tipoHabitacionController.tipoHabitacion.nombre}" title="NOMBRE" required="true" requiredMessage="NOMBRE REQUERIDO"/>
+
+                        
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoHabitacionController.editar()}" value="EDITAR" update="display,:TipoHabitacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoHabitacionEditDialog'));">
+                        <p:confirm header="CONFIRMAR" message="CONFIRMAR " icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="CANCELAR" onclick="PF('TipoHabitacionEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

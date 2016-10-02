@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" status="GENERATED" xs="false" id="_144961558501655" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+    <jpa:entity xre="false" compositePrimaryKeyType="NONE" sm="false" abstract="false" class="Usuario" visibile="true" minimized="false" rootElement="_144961558501655" id="_144961558508459">
+        <jpa:attributes>
+            <basic attribute-type="String" visibile="true" name="contrasena" id="_144961558508460">
+                <jpa:column name="contrasena" nullable="false" insertable="true" updatable="true"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="perfil" id="_144961558508461">
+                <jpa:column name="perfil"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="usuario" id="_144961558508463">
+                <jpa:column name="usuario" unique="true" nullable="false" insertable="true" updatable="false"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="cedula" id="_144961558508464">
+                <jpa:column name="cedula" unique="true" nullable="false" insertable="true" updatable="false" length="10"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="nombre" id="_144961558508465">
+                <jpa:column name="nombre" nullable="false" insertable="true" updatable="true" length="20"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="apellido" id="_144961558508466">
+                <jpa:column name="apellido" nullable="false" insertable="true" updatable="true" length="20"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="correo" id="_144961558508467">
+                <jpa:column name="correo" unique="true" nullable="false" insertable="true" updatable="true" length="40"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="telefono" id="_144961558508468">
+                <jpa:column name="telefono" insertable="true" updatable="true" length="20"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="sexo" id="_144961558508469">
+                <jpa:column name="sexo" nullable="false" insertable="true" updatable="true"/>
+            </basic>
+            <jpa:id attribute-type="Long" visibile="true" name="id" id="_144961558508462">
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="usuarios"/>
+        <jpa:inheritance strategy="JOINED"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyType="NONE" sm="false" abstract="false" class="Administrador" superclassId="_144961558508459" visibile="true" minimized="false" rootElement="_144961558501655" id="_144961558508458">
+        <jpa:attributes/>
+        <jpa:table name="administradores"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyType="NONE" sm="false" abstract="false" class="Cliente" superclassId="_144961558508459" visibile="true" minimized="false" rootElement="_144961558501655" id="_144961558515470">
+        <jpa:attributes/>
+        <jpa:table name="clientes"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyType="NONE" sm="false" abstract="false" class="Habitacion" visibile="true" minimized="false" rootElement="_144961558501655" id="_144961558519872">
+        <jpa:attributes>
+            <basic attribute-type="String" visibile="true" name="nomenclatura" id="_144961558519977">
+                <jpa:column name="nomenclatura" unique="true" nullable="false" insertable="true" updatable="false" length="10"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="descripcion" id="_144961558519978">
+                <jpa:column name="descripcion" insertable="true" updatable="true" length="100"/>
+            </basic>
+            <basic attribute-type="double" visibile="true" name="precio" id="_144961558519979">
+                <jpa:column name="precio" nullable="false" insertable="true" updatable="true"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="estado" id="_144961558520080">
+                <jpa:column name="estado" nullable="false" insertable="true" updatable="true"/>
+            </basic>
+            <one-to-one connected-entity-id="_144961558527192" target-entity="TipoHabitacion" visibile="true" name="tipoHabitacion" id="_144961558519974"/>
+            <jpa:id attribute-type="Long" visibile="true" name="id" id="_144961558519976">
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="habitaciones"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyType="NONE" sm="false" abstract="false" class="Reserva" visibile="true" minimized="false" rootElement="_144961558501655" id="_144961558522581">
+        <jpa:attributes>
+            <basic attribute-type="java.util.Date" visibile="true" name="fechaHoraRegistro" id="_144961558522582">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </basic>
+            <basic attribute-type="java.util.Date" visibile="true" name="fechaHoraSalida" id="_144961558522583">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </basic>
+            <many-to-one connected-entity-id="_144961558515470" target-entity="Cliente" visibile="true" name="cliente" id="_144961558522585"/>
+            <jpa:id attribute-type="Long" visibile="true" name="id" id="_144961558522584">
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyType="NONE" sm="false" abstract="false" class="Servicio" visibile="true" minimized="false" rootElement="_144961558501655" id="_144961558525187">
+        <jpa:attributes>
+            <basic attribute-type="String" visibile="true" name="nombre" id="_144961558525189">
+                <jpa:column name="nombre" nullable="false" insertable="true" updatable="true" length="20"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="descripcion" id="_144961558525190">
+                <jpa:column name="descripcion" insertable="true" updatable="true" length="100"/>
+            </basic>
+            <jpa:id attribute-type="Long" visibile="true" name="id" id="_144961558525188">
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="servicios"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyType="NONE" sm="false" abstract="false" class="TipoHabitacion" visibile="true" minimized="false" rootElement="_144961558501655" id="_144961558527192">
+        <jpa:attributes>
+            <basic attribute-type="String" visibile="true" name="nombre" id="_144961558527194">
+                <jpa:column name="nombre" nullable="false" insertable="true" updatable="true" length="20"/>
+            </basic>
+            <jpa:id attribute-type="Long" visibile="true" name="id" id="_144961558527193">
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:diagram id="_144961558501656">
+        <plane elementRef="_144961558501655" id="_144961558501657_p"/>
+    </jpa:diagram>
+</jpa:entity-mappings>

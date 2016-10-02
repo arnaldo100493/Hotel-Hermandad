@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ClienteCreateDlg" widgetVar="ClienteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="CREAR" closeOnEscape="true">
+
+            <h:form id="ClienteCreateForm">
+
+                <h:panelGroup id="display" rendered="#{clienteController.cliente != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="nombre" for="nombre" />
+                        <p:inputText id="nombre" value="#{clienteController.cliente.nombre}" title="nombre" required="true" requiredMessage="nombre"/>
+
+                        <p:outputLabel value="apellido" for="apellido" />
+                        <p:inputText id="apellido" value="#{clienteController.cliente.apellido}" title="apellido" required="true" requiredMessage="CAMPO apellido REQUERIDO"/>
+
+                        <p:outputLabel value="cedula" for="cedula" />
+                        <p:inputText type="number" id="cedula" value="#{clienteController.cliente.cedula}" title="cedula" required="true" requiredMessage="CAMPO cedula REQUERIDO"/>
+
+                        <p:outputLabel value="sexo" for="sexo" />
+                        <p:selectOneMenu id="sexo" value="#{clienteController.cliente.sexo}" required="true" requiredMessage="CAMPO SEXO NECESARIO">
+                            <f:selectItem noSelectionOption="true" itemValue="#{null}" itemLabel="SELECICIONE UN SEXO"/>
+                            <f:selectItem itemValue="FEMENINO" itemLabel="FEMENINO"/>
+                            <f:selectItem itemValue="MASCULINO" itemLabel="MASCULINO"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="correo" for="correo" />
+                        <p:inputText type="email" id="correo" value="#{clienteController.cliente.correo}" title="correo" required="true" requiredMessage="CAMPO correo REQUERIDO"/>
+
+                        <p:outputLabel value="telefono" for="telefono" />
+                        <p:inputText type="number" id="telefono" value="#{clienteController.cliente.telefono}" title="telefono"/>
+
+                        <p:outputLabel value="usuario" for="usuario" />
+                        <p:inputText id="usuario" value="#{clienteController.cliente.usuario}" title="usuario" required="true" requiredMessage="CAMPO usuario REQUERIDO "/>
+
+                        <p:outputLabel value="contraseña" for="contrasena" />
+                        <p:password id="contrasena" value="#{clienteController.cliente.contrasena}" title="CONTRASEÑA" required="true" requiredMessage="CAMPO REQUERIDO"/>
+
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{clienteController.crear()}" value="GUARDAR" update="display,:ClienteListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ClienteCreateDialog'));">
+                        <p:confirm header="CONFIRMAR" message="CONFIRMAR GUARDAR" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="CANCELAR" onclick="PF('ClienteCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AdministradorCreateDlg" widgetVar="AdministradorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="CREAR" closeOnEscape="true">
+
+            <h:form id="AdministradorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{administradorController.administrador != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="nombre" for="nombre" />
+                        <p:inputText id="nombre" value="#{administradorController.administrador.nombre}" title="nombre" required="true" requiredMessage="CAMPO nombre REQUERIDO"/>
+
+                        <p:outputLabel value="apellido" for="apellido" />
+                        <p:inputText id="apellido" value="#{administradorController.administrador.apellido}" title="apellido" required="true" requiredMessage="CAMPO apellido REQUERIDO"/>
+
+                        <p:outputLabel value="cedula" for="cedula" />
+                        <p:inputText type="number" id="cedula" value="#{administradorController.administrador.cedula}" title="cedula" required="true" requiredMessage="CAMPO cedula REQUERIDO"/>
+
+                        <p:outputLabel value="sexo" for="sexo" />
+                        <p:selectOneMenu id="sexo" value="#{administradorController.administrador.sexo}">
+                            <f:selectItem itemLabel="SELECCIONE UN SEXO" noSelectionOption="true" value="#{null}"/>
+                            <f:selectItem itemLabel="MASCULINO" value="MASCULINO"/>
+                            <f:selectItem itemLabel="FEMENINO" value="FEMENINO"/>         
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="correo" for="correo" />
+                        <p:inputText type="email" id="correo" value="#{administradorController.administrador.correo}" title="correo" required="true" requiredMessage="CAMPO correo REQUERIDO"/>
+
+                        <p:outputLabel value="telefono" for="telefono" />
+                        <p:inputText type="number" id="telefono" value="#{administradorController.administrador.telefono}" title="telefono"/>
+
+                        <p:outputLabel value="usuario" for="usuario" />
+                        <p:inputText id="usuario" value="#{administradorController.administrador.usuario}" title="usuario" required="true" requiredMessage="CAMPO usuario REQUERIDO "/>
+
+                        <p:outputLabel value="contraseña" for="contrasena" />
+                        <p:password id="contrasena" value="#{administradorController.administrador.contrasena}" title="CONTRASEÑA" required="true" requiredMessage="CAMPO REQUERIDO"/>
+
+
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{administradorController.crear()}" value="GUARDAR" update="display,:AdministradorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AdministradorCreateDialog'));">
+                        <p:confirm header="CONFIRMAR" message="DESEAS GUARDALO" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="CANCELAR" onclick="PF('AdministradorCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

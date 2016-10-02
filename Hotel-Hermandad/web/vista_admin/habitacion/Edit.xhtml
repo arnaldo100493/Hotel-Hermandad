@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="HabitacionEditDlg" widgetVar="HabitacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="EDITAR" closeOnEscape="true">
+
+            <h:form id="HabitacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{habitacionController.habitacion != null}">
+
+
+                        <p:outputLabel value="NOMESCLATURA" for="nomenclatura" />
+                        <p:inputText id="nomenclatura" value="#{habitacionController.habitacion.nomenclatura}" title="NOMESCLATURA" required="true" requiredMessage="CAMPO NOMESCLATURA REQURIDO"/>
+
+                        <p:outputLabel value="DESCRIPCIÓN" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{habitacionController.habitacion.descripcion}" title="DESCRIPCIÓN"/>
+
+                        <p:outputLabel value="PRECIO" for="precio" />
+                        <p:inputText id="precio" value="#{habitacionController.habitacion.precio}" title="PRECIO" required="true" requiredMessage="CAMPO PRECIO REQUERIDO"/>
+
+                        <p:outputLabel value="ESTADO" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{habitacionController.habitacion.estado}" required="true" requiredMessage="CAMPO ESTADO NECESARIO">
+                            <f:selectItem itemValue="disponible" itemLabel="DISPONIBLE"/>
+                            <f:selectItem itemValue="ocupada" itemLabel="OCUPADA"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="TIPO DE HABITACIÓN" for="tipoHabitacion" />
+                        <p:selectOneMenu required="true" id="tipoHabitacion" value="#{habitacionController.habitacion.tipoHabitacion}"  converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="SELECCIONE UN TIPO"/>
+                            <f:selectItems value="#{tipoHabitacionController.tipoHabitacions}"
+                                           var="tipoHabitacionItem"
+                                           itemValue="#{tipoHabitacionItem}"
+                                           itemLabel="#{tipoHabitacionItem.nombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="SERVICIOS" for="servicios" />
+                        <p:outputLabel value="Primero Crear Servicios" rendered="#{servicioController.servicios.size()==0}"/>
+                        <p:selectManyMenu required="true" rendered="#{servicioController.servicios.size()>0}" id="servicios" value="#{habitacionController.habitacion.servicios}"  converter="omnifaces.SelectItemsConverter">
+                            <f:selectItems value="#{servicioController.servicios}"
+                                           var="serviciosItem"
+                                           itemValue="#{serviciosItem}"
+                                           itemLabel="#{serviciosItem.nombre}"
+                                           />
+                        </p:selectManyMenu>
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{habitacionController.editar()}" value="EDITAR" update="display,:HabitacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('HabitacionEditDialog'));">
+                        <p:confirm header="CONFIRMAR" message="CONFIRMAR EDITAR" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="CANCELAR" onclick="PF('HabitacionEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

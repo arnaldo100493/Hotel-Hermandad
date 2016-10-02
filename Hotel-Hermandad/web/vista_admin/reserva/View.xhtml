@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ReservaViewDlg" widgetVar="ReservaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="VER" closeOnEscape="true">
+
+            <h:form id="ReservaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{reservaController.reserva != null}">
+
+                        <h:outputLabel value="ID" for="id" />
+                        <h:outputText id="id" value="#{reservaController.reserva.id}" />
+
+                        <p:outputLabel value="FECHA Y HORA DE REGISTRO" for="horaRegistro" />
+                        <h:outputText id="horaRegistro" value="#{reservaController.reserva.fechaHoraRegistro}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText>
+
+                        <p:outputLabel value="FECHA Y HORA DE SALIDA" for="horaSalida" />
+                        <p:outputLabel id="horaSalida" value="#{reservaController.reserva.fechaHoraSalida}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                        </p:outputLabel>
+
+                        <p:outputLabel value="CLIENTE" for="cliente" />
+                        <p:outputLabel id="cliente" value="#{reservaController.reserva.cliente.nombre} #{reservaController.reserva.cliente.nombre}"/>
+
+
+                        <p:outputLabel value="HABITACIÓN" for="habitacion" />
+                        <p:dataList id="habitacion" value="#{reservaController.reserva.habitaciones}" var="h" type="ordered">
+                            #{h.nomenclatura}
+                        </p:dataList>
+                    </p:panelGrid>
+                    <p:commandButton value="CERRAR" onclick="PF('ReservaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

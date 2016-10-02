@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ReservaCreateDlg" widgetVar="ReservaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="CREAR" closeOnEscape="true">
+
+            <p:outputLabel value="NO HAY HABITACIONES DISPONIBLE" rendered="#{habitacionController.habitaciones_disponibles.size()==0}"/>
+
+            <h:form id="ReservaCreateForm" rendered="#{habitacionController.habitaciones_disponibles.size()>0}">
+
+                <h:panelGroup id="display" rendered="#{reservaController.reserva != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="FECHA Y HORA DE REGISTRO" for="horaRegistro" />
+                        <p:calendar id="horaRegistro" pattern="dd/MM/yyyy HH:mm a" 
+                                    mindate="#{reservaController.min_date}"
+                                    required="true"
+                                    value="#{reservaController.reserva.fechaHoraRegistro}" title="FECHA Y HORA DE REGISTRO"  showOn="button"/>
+
+                        <p:outputLabel value="FECHA Y HORA DE SALIDA" for="horaSalida" />
+                        <p:calendar id="horaSalida" pattern="dd/MM/yyyy HH:mm a" 
+                                    mindate="#{reservaController.min_date}"
+                                    required="true"
+                                    value="#{reservaController.reserva.fechaHoraSalida}" title="FECHA Y HORA DE SALIDA"  showOn="button"/>
+
+                        <p:outputLabel value="CLIENTE" for="cliente" />
+                        <p:commandButton value="Primero Crear Clientes" action="/vista_admin/cliente/index.xhtml?faces-redirect=true" rendered="#{clienteController.clientes.size()==0}"/>
+                        <p:selectOneMenu required="true" rendered="#{clienteController.clientes.size()>0}" id="cliente" value="#{reservaController.reserva.cliente}"  converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="SELECCIONE UN CLIENTE"/>
+                            <f:selectItems value="#{clienteController.clientes}"
+                                           var="clienteItem"
+                                           itemValue="#{clienteItem}"
+                                           itemLabel="cc: #{clienteItem.cedula} - #{clienteItem.nombre} #{clienteItem.apellido}"
+                                           />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="HABITACIONES" for="habitaciones" />
+                        <p:outputLabel value="NO HAY HABITACIONES DISPONIBLE" rendered="#{habitacionController.habitaciones_disponibles.size()==0}"/>
+                        <p:selectManyMenu required="true" rendered="#{habitacionController.habitaciones_disponibles.size()>0}" id="habitaciones" value="#{reservaController.reserva.habitaciones}"  converter="omnifaces.SelectItemsConverter">
+                            <f:selectItems value="#{habitacionController.habitaciones_disponibles}"
+                                           var="habitacionesItem"
+                                           itemValue="#{habitacionesItem}"
+                                           itemLabel="#{habitacionesItem.nomenclatura}, $#{habitacionesItem.precio}"
+                                           />
+
+                        </p:selectManyMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{reservaController.crear()}" value="Guardar" update="display,:ReservaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ReservaCreateDialog'));">
+                        <p:confirm header="CONFIRMAR" message="COMFRIMAR GUARDAR" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="CANCELAR" onclick="PF('ReservaCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

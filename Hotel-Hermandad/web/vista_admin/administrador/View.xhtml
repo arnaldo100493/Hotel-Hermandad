@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AdministradorViewDlg" widgetVar="AdministradorViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="VER" closeOnEscape="true">
+
+            <h:form id="AdministradorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{administradorController.administrador != null}">
+
+                        <p:outputLabel value="id" for="id" />
+                        <p:outputLabel id="id" value="#{administradorController.administrador.id}" title="id" />
+
+                        <p:outputLabel value="nombre" for="nombre" />
+                        <p:outputLabel id="nombre" value="#{administradorController.administrador.nombre}" title="nombre" />
+
+                        <p:outputLabel value="apellido" for="apellido" />
+                        <p:outputLabel id="apellido" value="#{administradorController.administrador.apellido}" title="apellido" />
+
+                        <p:outputLabel value="cedula" for="cedula" />
+                        <p:outputLabel id="cedula" value="#{administradorController.administrador.cedula}" title="cedula" />
+
+                        <p:outputLabel value="sexo" for="sexo" />
+                        <p:outputLabel id="sexo" value="#{administradorController.administrador.sexo}" title="sexo" />
+                        <p:outputLabel value="correo" for="correo" />
+                        <p:outputLabel id="correo" value="#{administradorController.administrador.correo}" title="correo" />
+
+                        <p:outputLabel value="telefono" for="telefono"/>
+                        <p:outputLabel id="telefono" value="#{administradorController.administrador.telefono}" title="telefono"/>
+
+                        <p:outputLabel value="usuario" for="usuario" />
+                        <p:outputLabel id="usuario" value="#{administradorController.administrador.usuario}" title="usuario" />
+
+                        <p:outputLabel value="contraseña" for="contrasena" />
+                        <p:outputLabel id="contrasena" value="#{administradorController.administrador.contrasena}" title="CONTRASEÑA" />
+
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('AdministradorViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

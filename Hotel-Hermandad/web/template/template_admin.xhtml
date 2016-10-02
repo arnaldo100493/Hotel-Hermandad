@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputScript name="./js/hotel.js"/>
+        
+        <title>ADMINISTRADOR</title>
+    </h:head>
+    <h:form style="margin-top: 20%;margin-left: 45%;" rendered="#{login.sesionAdmin==false}">
+        <p:commandButton style="padding: 10px;" action="/index?faces-redirect=true" value="Inicia Sesión" icon="ui-icon-person"/>
+    </h:form>
+    <h:body rendered="#{login.sesionAdmin}">
+
+
+        <p:growl id="growl" showSummary="true" autoUpdate="true"/>
+        <div id="top" >
+            <ui:insert name="top">
+                <h:form>
+                    <p:menubar >
+                        <p:menuitem value="HOTEL HERMANDA" icon="ui-icon-home" style="padding: 10px;font-size: 20px;"/>
+                        <f:facet name="options">
+                            <p:outputLabel style="margin-right:10px; font-size: 20px;" value="#{login.usuario.nombre} #{login.usuario.apellido}" class="user_login"/>
+                            <p:commandButton style="padding: 10px" value="Salir" icon="ui-icon-extlink" actionListener="#{login.salir()}" action="/index?faces-redirect=true"/>
+                        </f:facet>
+                    </p:menubar>
+                </h:form>
+            </ui:insert>
+        </div>
+        <div>
+            <div id="left">
+                <ui:insert name="left">
+                    <h:form>
+                        <p:menu style="width: 225px;">
+                            <p:submenu label="Clientes">
+                                <p:menuitem value="Clientes" update=":content" outcome="/vista_admin/cliente/index.xhtml?faces-redirect=true" icon="ui-icon-disk"/>
+                            </p:submenu>
+                            <p:submenu label="Habitacion">
+                                <p:menuitem value="habitación" update=":content" outcome="/vista_admin/habitacion/index.xhtml?faces-redirect=true" icon="ui-icon-disk"/>
+                            </p:submenu>
+
+                            <p:submenu label="Reserva">
+                                <p:menuitem value="reserva" update=":content" outcome="/vista_admin/reserva/index.xhtml?faces-redirect=true" icon="ui-icon-disk"/>
+                            </p:submenu>
+
+                            <p:submenu label="Servicio">
+                                <p:menuitem value="servicio" update=":content" outcome="/vista_admin/servicio/index.xhtml?faces-redirect=true" icon="ui-icon-disk"/>
+                            </p:submenu>
+
+                            <p:submenu label="Tipo de Habitacion">
+                                <p:menuitem value="tipo de habitacion" update=":content" outcome="/vista_admin/tipoHabitacion/index.xhtml?faces-redirect=true" icon="ui-icon-disk"/>
+                            </p:submenu>
+
+                            <p:submenu label="Configuracióm">
+                                <p:menuitem value="Salir" icon="ui-icon-extlink" 
+                                            actionListener="#{login.salir()}"
+                                            action="/index?faces-redirect=true"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </ui:insert>
+            </div>
+            <div id="content" class="left_content">
+                <ui:insert name="content"></ui:insert>
+            </div>
+        </div>
+        <div id="bottom">
+            <ui:insert name="bottom"><center><strong>Hotel Hermandad</strong></center></ui:insert>
+        </div>
+    </h:body>
+
+</html>

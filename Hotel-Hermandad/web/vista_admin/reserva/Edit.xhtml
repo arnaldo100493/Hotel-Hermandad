@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ReservaEditDlg" widgetVar="ReservaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="EDITAR" closeOnEscape="true">
+
+            <h:form id="ReservaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{reservaController.reserva != null}">
+
+
+                        <h:outputLabel value="ID" for="id" />
+                        <h:outputText id="id" value="#{reservaController.reserva.id}" />
+                        
+                        <p:outputLabel value="FECHA Y HORA DE REGISTRO" for="horaRegistro" />
+                        <p:calendar required="true" id="horaRegistro" pattern="dd/MM/yyyy HH:mm" mindate="#{reservaController.min_date}" value="#{reservaController.reserva.fechaHoraRegistro}" title="FECHA Y HORA DE REGISTRO"  showOn="button"/>
+
+                        <p:outputLabel value="FECHA Y HORA DE SALIDA" for="horaSalida" />
+                        <p:calendar required="true" id="horaSalida" pattern="dd/MM/yyyy HH:mm" mindate="#{reservaController.min_date}" value="#{reservaController.reserva.fechaHoraSalida}" title="FECHA Y HORA DE SALIDA"  showOn="button"/>
+
+                        <p:outputLabel value="CLIENTE" for="cliente" />
+                        <p:selectOneMenu required="true" id="cliente" value="#{reservaController.reserva.cliente}"  converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="SELECCIONE UN CLIENTE"/>
+                            <f:selectItems value="#{clienteController.clientes}"
+                                           var="clienteItem"
+                                           itemValue="#{clienteItem}"
+                                           itemLabel="#{clienteItem.nombre} #{clienteItem.apellido}"
+                                           />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="HABITACIONES" for="habitaciones" />
+                        <p:selectManyMenu required="true" id="habitaciones" value="#{reservaController.reserva.habitaciones}"  converter="omnifaces.SelectItemsConverter">
+                            <f:selectItems value="#{habitacionController.habitacions}"
+                                           var="habitacionesItem"
+                                           itemValue="#{habitacionesItem}"
+                                           itemLabel="#{habitacionesItem.nomenclatura}"
+                                           />
+
+                        </p:selectManyMenu>
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{reservaController.editar()}" value="EDITAR" update="display,:ReservaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ReservaEditDialog'));">
+                        <p:confirm header="CONFIRMAR" message="CONFIRMA EDITAR" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="CANCELAR" onclick="PF('ReservaEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

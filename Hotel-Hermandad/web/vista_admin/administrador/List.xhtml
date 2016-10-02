@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="AdministradorListForm">
+
+        <p:panel header="ADMINISTRADOR">
+            <p:contextMenu id="AdministradorDataTableContextMenu" for="datalist">  
+                <p:menuitem value="CREAR" onclick="document.getElementById('AdministradorListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="VER" onclick="document.getElementById('AdministradorListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="EDITAR" onclick="document.getElementById('AdministradorListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="ELIMINAR" onclick="document.getElementById('AdministradorListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{administradorController.administradors}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{administradorController.administrador}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AdministradorDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AdministradorDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('AdministradorListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="ID"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="NOMBRE"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.apellido}" filterBy="#{item.apellido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAdministradorTitle_apellido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellido}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.usuario}" filterBy="#{item.usuario}">
+                    <f:facet name="header">
+                        <h:outputText value="USUARIO"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuario}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.cedula}" filterBy="#{item.cedula}">
+                    <f:facet name="header">
+                        <h:outputText value="CEDULA"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cedula}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.correo}" filterBy="#{item.correo}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListAdministradorTitle_correo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.correo}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.telefono}" filterBy="#{item.telefono}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListAdministradorTitle_telefono}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.telefono}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.sexo}" filterBy="#{item.sexo}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListAdministradorTitle_sexo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.sexo}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="CREAR" actionListener="#{administradorController.preparar_crear()}" update=":AdministradorCreateForm" oncomplete="PF('AdministradorCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="VER" update=":AdministradorViewForm" oncomplete="PF('AdministradorViewDialog').show()" disabled="#{empty administradorController.administrador}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="EDITAR" update=":AdministradorEditForm" oncomplete="PF('AdministradorEditDialog').show()" disabled="#{empty administradorController.administrador}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="ELIMINAR" actionListener="#{administradorController.eliminar()}" update=":growl,datalist" disabled="#{empty administradorController.administrador}">
+                <p:confirm header="NOTIFICACIÓN" message="CONFIRMAR ELIMINAR" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="../../template/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

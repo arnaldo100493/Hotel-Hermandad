@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog  id="HabitacionCreateDlg" widgetVar="HabitacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="CREAR" closeOnEscape="true">
+
+            <h:form id="HabitacionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{habitacionController.habitacion != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="NOMESCLATURA" for="nomenclatura" />
+                        <p:inputText id="nomenclatura" value="#{habitacionController.habitacion.nomenclatura}" title="NOMESCLATURA" required="true" requiredMessage="CAMPOR NOMESCLATURA REQURIDO"/>
+
+                        <p:outputLabel value="DESCRIPCIÓN" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{habitacionController.habitacion.descripcion}" title="DESCRIPCIÓN"/>
+
+                        <p:outputLabel value="PRECIO" for="precio" />
+                        <p:inputText type="number" id="precio" value="#{habitacionController.habitacion.precio}" title="PRECIO" required="true" requiredMessage="CAMPO PRECIO REQUERIDO"/>
+
+                        <p:outputLabel value="TIPO DE HABITACIÓN" for="tipoHabitacion" />
+                        <p:outputLabel value="Primero Crear Tipos de Habitaciones" rendered="#{tipoHabitacionController.tipoHabitacions.size()==0}"/>
+                        <p:selectOneMenu rendered="#{tipoHabitacionController.tipoHabitacions.size()>0}"
+                                         id="tipoHabitacion" value="#{habitacionController.habitacion.tipoHabitacion}"
+                                         converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="SELECCIONE UN TIPO"/>
+                            <f:selectItems value="#{tipoHabitacionController.tipoHabitacions}"
+                                           var="tipoHabitacionItem"
+                                           itemValue="#{tipoHabitacionItem}"
+                                           itemLabel="#{tipoHabitacionItem.nombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="SERVICIOS" for="servicios" />
+                        <p:outputLabel value="Primero Crear Servicios" rendered="#{servicioController.servicios.size()==0}"/>
+                        <p:selectManyMenu rendered="#{servicioController.servicios.size()>0}" id="servicios" value="#{habitacionController.habitacion.servicios}"  converter="omnifaces.SelectItemsConverter">
+                            <f:selectItems value="#{servicioController.servicios}"
+                                           var="serviciosItem"
+                                           itemValue="#{serviciosItem}"
+                                           itemLabel="#{serviciosItem.nombre}"
+                                           />
+                        </p:selectManyMenu>
+
+<!--                        <p:outputLabel value="SERVICIOS" for="servicio" />
+                        <p:outputLabel value="Primero Crear Servicios" rendered="#{servicioController.servicios.size()==0}"/>
+                        <p:selectManyMenu rendered="#{servicioController.servicios.size()>0}" id="servicio" value="#{habitacionController.habitacion.servicios}"  converter="omnifaces.SelectItemsConverter">
+                            <f:selectItems noSelectionValue="true" value="" itemLabel="SELECCIONE SERVICOS"/>
+                            <f:selectItems value="#{servicioController.servicios}"
+                                           var="servicioItem"
+                                           itemValue="#{servicioItem}"
+                                           itemLabel="#{servicioItem.nombre}"
+                                           />
+                        </p:selectManyMenu>-->
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{habitacionController.crear()}" value="GUARDAR" update="display,:HabitacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('HabitacionCreateDialog'));">
+                        <p:confirm header="CONFIRMAR" message="CONFIRMAR GUARDAR" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="CANCELAR" onclick="PF('HabitacionCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

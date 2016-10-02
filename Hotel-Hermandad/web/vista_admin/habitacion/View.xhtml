@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HabitacionViewDlg" widgetVar="HabitacionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="VER" closeOnEscape="true">
+
+            <h:form id="HabitacionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{habitacionController.habitacion != null}">
+
+                        <p:outputLabel value="NOMESCLATURA" for="nomenclatura" />
+                        <p:outputLabel id="nomenclatura" value="#{habitacionController.habitacion.nomenclatura}" title="NOMESCLATURA" />
+
+                        <p:outputLabel value="DESCRIPCIÓN" for="descripcion" />
+                        <p:outputLabel id="descripcion" value="#{habitacionController.habitacion.descripcion}" title="DESCRIPCIÓN"/>
+
+                        <p:outputLabel value="PRECIO" for="precio" />
+                        <p:outputLabel id="precio" value="#{habitacionController.habitacion.precio}" title="PRECIO" />
+
+                        <p:outputLabel value="TIPO DE HABITACIÓN" for="tipoHabitacion" />
+                        <p:outputLabel id="tipoHabitacion" value="#{habitacionController.habitacion.tipoHabitacion.nombre}"/>
+                                                
+                    </p:panelGrid>
+                    <p:commandButton value="CERRAR" onclick="PF('HabitacionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoHabitacionCreateDlg" widgetVar="TipoHabitacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="CREAR" closeOnEscape="true">
+
+            <h:form id="TipoHabitacionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tipoHabitacionController.tipoHabitacion != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="NOMBRE" for="nombre" />
+                        <p:inputText id="nombre" value="#{tipoHabitacionController.tipoHabitacion.nombre}" title="NOMBRE" required="true" requiredMessage="NOMBRE REQUERIDO"/>
+
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoHabitacionController.crear()}" value="GUARDAR" update="display,:TipoHabitacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoHabitacionCreateDialog'));">
+                        <p:confirm header="CONFIRMAR" message="CONFIRMAR" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="CANCELAR" onclick="PF('TipoHabitacionCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

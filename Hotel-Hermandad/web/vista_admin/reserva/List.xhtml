@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <p:outputLabel style="color: #1c54de" value="CREAR CLIENTES Y HABITACIONES !!LUEGO REGRESA!!" rendered="#{clienteController.clientes.size()==0 or habitacionController.habitacions.size()==0}"/>
+     <h:form id="ReservaListForm" rendered="#{clienteController.clientes.size()>0 and habitacionController.habitacions.size()>0}">
+
+        
+            <p:contextMenu id="ReservaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="CREAR" onclick="document.getElementById('ReservaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="VER" onclick="document.getElementById('ReservaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="EDITAR" onclick="document.getElementById('ReservaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="ELIMINAR" onclick="document.getElementById('ReservaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{reservaController.reservas}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{reservaController.reserva}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ReservaDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ReservaDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ReservaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="ID"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.fechaHoraRegistro}" filterBy="#{item.fechaHoraRegistro}">
+                    <f:facet name="header">
+                        <h:outputText value="HORA REGISTRO"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaHoraRegistro}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaHoraSalida}" filterBy="#{item.fechaHoraSalida}">
+                    <f:facet name="header">
+                        <h:outputText value="HORA SALIDA"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaHoraSalida}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                    </h:outputText>
+                </p:column>
+
+                <p:column sortBy="#{item.cliente.nombre}" filterBy="#{item.cliente.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="CLIENTE"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cliente.nombre} #{item.cliente.apellido}"/>
+                </p:column>
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="HABITACIÓNN"/>
+                    </f:facet>
+                    <p:dataList value="#{item.habitaciones}" var="h" type="ordered">
+                        #{h.nomenclatura}
+                    </p:dataList>
+                </p:column>
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="CREAR" actionListener="#{reservaController.preparar_crear()}" update=":ReservaCreateForm" oncomplete="PF('ReservaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="VER" update=":ReservaViewForm" oncomplete="PF('ReservaViewDialog').show()" disabled="#{empty reservaController.reserva}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="EDITAR" update=":ReservaEditForm" oncomplete="PF('ReservaEditDialog').show()" disabled="#{empty reservaController.reserva}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="ELIMINAR" actionListener="#{reservaController.eliminar()}" update=":growl,datalist" disabled="#{empty reservaController.reserva}">
+                <p:confirm header="CONFIRMAR" message="CONFIRMAR ELIMINAR" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        <ui:include src="../../template/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>
